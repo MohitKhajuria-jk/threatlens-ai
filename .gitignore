@@ -1,0 +1,12 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Secrets and local data (database, cached feeds)
+backend/.env
+backend/data/
+# Frontend
+frontend/node_modules/
+frontend/dist/
+.DS_Store

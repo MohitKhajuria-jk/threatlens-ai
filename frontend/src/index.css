@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* Color is heat: the interface is cool indigo; warm colors only ever mean threat. Teal (cool) means safe. */
+@theme {
+  --color-ink: #13112a;
+  --color-panel: #1b1838;
+  --color-panel-2: #232046;
+  --color-raised: #2b2753;
+  --color-line: #312d5a;
+  --color-line-strong: #46417a;
+  --color-text: #eceaf8;
+  --color-muted: #a6a2c8;
+  --color-faint: #7c78a3;
+  --color-activity: #5d58a8;
+  --color-activity-hi: #8c88d6;
+
+  --color-low: #8c88d6;
+  --color-medium: #e9cb57;
+  --color-high: #ec6f35;
+  --color-critical: #ee3f86;
+  --color-safe: #56c2b8;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 0;
+}
+
+/* Headings use Archivo's wide cut, like lettering on instrument panels. */
+.display {
+  font-stretch: 116%;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 1.12;
+}
+.wide {
+  font-stretch: 110%;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: #4b4590;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.93rem;
+    white-space: nowrap;
+    transition: background-color 120ms, border-color 120ms, color 120ms;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  /* Primary actions are light on dark: color stays reserved for threat levels. */
+  .btn-primary {
+    background: var(--color-text);
+    color: var(--color-ink);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #ffffff;
+  }
+  .btn-quiet {
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-text);
+  }
+  .btn-quiet:hover:not(:disabled) {
+    background: var(--color-panel-2);
+  }
+  .btn-ghost {
+    color: var(--color-muted);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-panel-2);
+    color: var(--color-text);
+  }
+  .field {
+    min-height: 2.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-ink);
+    padding: 0 0.75rem;
+    color: var(--color-text);
+  }
+  .field::placeholder {
+    color: var(--color-faint);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-muted);
+  }
+  .log {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  .code {
+    font-family: var(--font-mono);
+    font-size: 0.84em;
+  }
+  .prose-answer p {
+    margin: 0 0 0.6rem;
+  }
+  .prose-answer p:last-child {
+    margin-bottom: 0;
+  }
+  .prose-answer ul,
+  .prose-answer ol {
+    margin: 0.2rem 0 0.7rem;
+    padding-left: 1.2rem;
+  }
+  .prose-answer ul {
+    list-style: disc;
+  }
+  .prose-answer ol {
+    list-style: decimal;
+  }
+  .prose-answer li {
+    margin: 0.15rem 0;
+  }
+  .prose-answer strong {
+    font-weight: 650;
+  }
+  .prose-answer code {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    background: var(--color-ink);
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    padding: 0.05rem 0.3rem;
+  }
+  .prose-answer pre {
+    background: var(--color-ink);
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    overflow-x: auto;
+    margin: 0.4rem 0 0.7rem;
+  }
+  .prose-answer pre code {
+    border: 0;
+    padding: 0;
+  }
+  .prose-answer h3,
+  .prose-answer h4 {
+    font-weight: 700;
+    margin: 0.8rem 0 0.3rem;
+  }
+}
+
+/* The radar sweep is the page's one ambient motion. */
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
